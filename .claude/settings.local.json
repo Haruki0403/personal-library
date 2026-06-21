@@ -4,7 +4,27 @@
       "Bash(git init *)",
       "Bash(git add *)",
       "Bash(git commit -m 'feat: design doc for personal library - Saul Bass hand-drawn graph style *)",
-      "Bash(git config *)"
+      "Bash(git config *)",
+      "Bash(bun run *)",
+      "Bash(pip --version)",
+      "Bash(PATH=\"/c/Program Files/WindowsApps/PythonSoftwareFoundation.Python.3.12_3.12.2800.0_x64__qbz5n2kfra8p0:/c/Windows/System32:$PATH\" python.exe *)",
+      "Bash(cmd.exe *)",
+      "Read(//c/Users/张扬/AppData/Local/Programs/**)",
+      "Bash(/c/Users/张扬/AppData/Local/Programs/Python/Python312/python.exe --version)",
+      "Read(//c/Users/张扬/AppData/Local/Microsoft/WindowsApps//**)",
+      "Bash(PATH=\"/c/Users/张扬/AppData/Local/Microsoft/WindowsApps:$PATH\" /c/Users/张扬/AppData/Local/Microsoft/WindowsApps/python.exe *)",
+      "Bash(/c/Users/张扬/AppData/Local/Microsoft/WindowsApps/python.exe -m venv venv)",
+      "Bash(./venv/Scripts/python.exe -m pip install django)",
+      "Bash(./venv/Scripts/python.exe -m django --version)",
+      "Bash(./venv/Scripts/python.exe -m django startproject config .)",
+      "Bash(./venv/Scripts/python.exe manage.py startapp library)",
+      "Bash(./venv/Scripts/python.exe manage.py migrate)",
+      "Bash(./venv/Scripts/python.exe manage.py runserver 8000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)",
+      "Bash(./venv/Scripts/python.exe -c ' *)",
+      "Bash(./venv/Scripts/python.exe manage.py makemigrations)",
+      "Bash(./venv/Scripts/python.exe -m pip install Pillow)",
+      "Bash(git rm *)"
     ]
   }
 }

@@ -1,0 +1,137 @@
+{% extends 'library/base.html' %}
+{% load static %}
+
+{% block title %}个人图书馆 · 侦探白板{% endblock %}
+
+{% block content %}
+
+{# === GRAPH MODE === #}
+<div class="mode-section" id="modeGraph">
+    <div class="whiteboard-container" id="whiteboard">
+        <!-- Floating clue -->
+        <p class="clue-text" id="clueText">「还没有连线等着被发现」</p>
+
+        <!-- Graph canvas -->
+        <div class="cy-container" id="cy">
+            <div class="empty-state" id="emptyState">
+                <div class="empty-state-icon">
+                    {% include 'library/includes/pin-icon.svg' %}
+                </div>
+                <h3>白板还是空的</h3>
+                <p>创建你的第一张卡片，开始连线你的思绪。</p>
+                <button class="btn btn-primary" id="addFirstCard">+ 新建卡片</button>
+            </div>
+        </div>
+
+        <!-- Slide-out detail panel -->
+        <aside class="detail-panel" id="detailPanel" aria-hidden="true">
+            <button class="detail-close" aria-label="关闭详情">&times;</button>
+            <div class="detail-content" id="detailContent"></div>
+        </aside>
+
+        <!-- FAB -->
+        <button class="fab" id="fabAdd" aria-label="新建卡片">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+{# === LIST / CARD WALL MODE === #}
+<div class="mode-section" id="modeList" style="display:none;">
+    <div class="list-layout">
+        <aside class="list-sidebar">
+            <h3>筛选</h3>
+            <div class="filter-group">
+                <h4>类型</h4>
+                <label><input type="radio" name="filterType" value="" checked> 全部</label>
+                <label><input type="radio" name="filterType" value="book"> 📖 书籍</label>
+                <label><input type="radio" name="filterType" value="music"> 🎵 音乐</label>
+                <label><input type="radio" name="filterType" value="film"> 🎬 电影</label>
+                <label><input type="radio" name="filterType" value="game"> 🎮 游戏</label>
+                <label><input type="radio" name="filterType" value="writing"> ✍️ 原创</label>
+            </div>
+            <div class="filter-group">
+                <h4>标签</h4>
+                <div id="filterTags"></div>
+            </div>
+            <button class="btn btn-secondary filter-clear" id="filterClear">清除筛选</button>
+        </aside>
+        <main class="list-main">
+            <div class="card-wall" id="cardWall">
+                <div class="empty-state">
+                    <h3>还没有卡片</h3>
+                    <p>去白板上创建几张卡片吧。</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+{# === SEARCH MODE === #}
+<div class="mode-section" id="modeSearch" style="display:none;">
+    <div class="search-layout">
+        <div class="search-bar">
+            <input type="search" id="searchInput" placeholder="搜索标题、正文、标签…" autofocus>
+            <button class="btn btn-primary" id="searchBtn">搜索</button>
+        </div>
+        <div class="search-results" id="searchResults">
+            <p class="search-hint">输入关键词，搜索你的所有卡片。</p>
+        </div>
+    </div>
+</div>
+
+{# === RANDOM WALK MODE === #}
+<div class="mode-section" id="modeRandom" style="display:none;">
+    <div class="random-layout">
+        <div class="random-card" id="randomCard">
+            <div class="empty-state">
+                <h3>🎲 随机漫步</h3>
+                <p>点击按钮，随机跳转到你的一张卡片。</p>
+                <button class="btn btn-primary" id="randomBtn">随机跳跃</button>
+            </div>
+        </div>
+        <div class="random-related" id="randomRelated">
+            <h4>和你最近看过的可能有关…</h4>
+            <div id="randomRelatedList"></div>
+        </div>
+    </div>
+</div>
+
+{# === NEW CARD MODAL (shared) === #}
+<div class="modal-overlay" id="cardModal" aria-hidden="true">
+    <div class="modal-card">
+        <h2>新建卡片</h2>
+        <form id="cardForm">
+            <div class="form-group">
+                <label for="cardType">类型</label>
+                <select id="cardType" name="type" required>
+                    <option value="">选择类型…</option>
+                    <option value="book">📖 书籍</option>
+                    <option value="music">🎵 音乐</option>
+                    <option value="film">🎬 电影</option>
+                    <option value="game">🎮 游戏</option>
+                    <option value="writing">✍️ 原创</option>
+                </select>
+            </div>
+            <div id="dynamicFields"></div>
+            <div class="form-group">
+                <label for="cardTags">标签</label>
+                <input type="text" id="cardTags" name="tags" placeholder="输入标签，回车添加…">
+                <div class="tags-container" id="tagsContainer"></div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary modal-cancel">取消</button>
+                <button type="submit" class="btn btn-primary">保存到白板</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.12/marked.min.js"></script>
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock %}

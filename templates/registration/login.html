@@ -1,0 +1,33 @@
+{% extends 'library/base.html' %}
+
+{% block title %}登录 · 个人图书馆{% endblock %}
+
+{% block content %}
+<div style="max-width:420px;margin:var(--space-16) auto;padding:var(--space-8)">
+    <h1 style="font-family:var(--font-display);margin-bottom:var(--space-8);text-align:center">进入侦探工作室</h1>
+
+    {% if form.errors %}
+    <div style="background:var(--color-film);color:var(--color-text-inverse);padding:var(--space-3);border-radius:var(--radius-md);margin-bottom:var(--space-4);font-size:14px">
+        用户名或密码不对，请重试。
+    </div>
+    {% endif %}
+
+    <form method="post" style="background:var(--color-surface);padding:var(--space-6);border-radius:var(--radius-lg);box-shadow:var(--shadow-md)">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_username">用户名</label>
+            <input type="text" name="username" id="id_username" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="id_password">密码</label>
+            <input type="password" name="password" id="id_password" required>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">登录</button>
+    </form>
+
+    <p style="text-align:center;margin-top:var(--space-4);color:var(--color-text-faint);font-size:13px">
+        只有你才能在这里写东西。
+    </p>
+</div>
+{% endblock %}

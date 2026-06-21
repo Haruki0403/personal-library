@@ -1,0 +1,15 @@
+<!-- 个人图书馆 · Saul Bass 风格 Logo -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" fill="none" aria-hidden="true">
+    <!-- Open book shape with pin -->
+    <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Book cover -->
+        <path d="M10 32V12a4 4 0 0 1 4-4h12l8 6-8 6H14a4 4 0 0 0-4 4Z" />
+        <path d="M10 32V12a4 4 0 0 0-4 4v16" />
+        <!-- Pin -->
+        <circle cx="30" cy="18" r="3" fill="var(--color-pin, #CC4444)" stroke="var(--color-pin, #CC4444)"/>
+        <line x1="30" y1="21" x2="30" y2="28" stroke="var(--color-pin, #CC4444)" stroke-width="1.2"/>
+    </g>
+    <!-- Scribble underline -->
+    <path d="M8 36 Q20 32 40 36 Q60 40 80 36 Q100 32 116 36"
+          stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.5"/>
+</svg>
