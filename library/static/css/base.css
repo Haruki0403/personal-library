@@ -370,7 +370,7 @@ a, button, [role="button"], [role="link"], input, textarea, select {
    ======================================== */
 
 .fab {
-    position: absolute;
+    position: fixed;
     bottom: var(--space-6);
     right: var(--space-6);
     width: 56px; height: 56px;
@@ -379,7 +379,7 @@ a, button, [role="button"], [role="link"], input, textarea, select {
     color: var(--color-text-inverse);
     border-radius: var(--radius-full);
     box-shadow: var(--shadow-lg);
-    z-index: 50;
+    z-index: 999;
 }
 .fab:hover {
     transform: scale(1.08);

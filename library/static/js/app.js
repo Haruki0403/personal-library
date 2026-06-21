@@ -204,9 +204,14 @@
         return map[type] || '#999';
     }
 
+    function getNodeLabelColor() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        return isDark ? '#E8E2D4' : '#2C2416';
+    }
+
     function getCyStyle() {
         return [
-            { selector: 'node', style: { 'background-color': 'data(color)', 'label': 'data(label)', 'color': '#2C2416', 'font-size': '12px', 'font-family': 'STFangsong, FangSong, serif', 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 6, 'width': 44, 'height': 44, 'border-width': 2, 'border-color': 'data(color)', 'border-opacity': 0.4, 'shape': 'round-rectangle' } },
+            { selector: 'node', style: { 'background-color': 'data(color)', 'label': 'data(label)', 'color': getNodeLabelColor(), 'font-size': '12px', 'font-family': 'STFangsong, FangSong, serif', 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 6, 'width': 44, 'height': 44, 'border-width': 2, 'border-color': 'data(color)', 'border-opacity': 0.4, 'shape': 'round-rectangle' } },
             { selector: 'edge', style: { 'width': 2, 'line-color': '#B5A894', 'curve-style': 'unbundled-bezier', 'target-arrow-shape': 'triangle', 'target-arrow-color': '#B5A894', 'arrow-scale': 0.6 } },
             { selector: 'edge[confirmed="false"]', style: { 'line-style': 'dashed', 'line-color': '#CCBBAA' } },
             { selector: 'node:selected', style: { 'border-width': 3, 'border-color': '#D4844A', 'border-opacity': 1 } }
@@ -246,6 +251,13 @@
         cy.on('mouseout', 'edge', () => removeTooltip());
 
         if (emptyState && allCards.length > 0) emptyState.style.display = 'none';
+
+        // Watch theme changes to update node label color
+        new MutationObserver(() => {
+            if (cy) {
+                cy.style().selector('node').style('color', getNodeLabelColor()).update();
+            }
+        }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
     }
 
     function addNodeToGraph(card) {
