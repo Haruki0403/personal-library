@@ -25,3 +25,12 @@
 - 自动连线：标签/创作者/标题关键词/内容关键词匹配
 - 管理员：admin / library2026
 - 本地运行：`./venv/Scripts/python.exe manage.py runserver`
+
+### 2026-06-21 · 会话 2（部署）
+
+- ✅ Phase 8: 部署到 PythonAnywhere（免费档）
+- ✅ 修复 STATIC_ROOT / STATIC_URL 配置
+- ✅ 修复 WSGI 文件缩进错误
+- ✅ collectstatic 静态文件收集
+- ✅ 修复 Static files 映射大小写
+- 🌐 线上地址：https://haruki0403.pythonanywhere.com

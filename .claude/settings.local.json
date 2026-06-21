@@ -29,7 +29,8 @@
       "Bash(git commit *)",
       "Bash(git remote *)",
       "Bash(git branch *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "WebFetch(domain:haruki0403.pythonanywhere.com)"
     ]
   }
 }
