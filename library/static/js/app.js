@@ -51,6 +51,7 @@
     }
 
     navLinks.forEach(link => {
+        if (!link.dataset.mode) return; // Skip non-mode links (login, etc.)
         link.addEventListener('click', (e) => {
             e.preventDefault();
             setMode(link.dataset.mode);
