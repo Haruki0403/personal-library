@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}个人图书馆{% endblock %}</title>
 
-    <!-- Fonts: ZCOOL KuaiLe (display) + Noto Serif SC (body) + LXGW WenKai (tags) -->
+    <!-- Font: ZCOOL KuaiLe (display, cheese font) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@400;600;700&family=LXGW+WenKai+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_head %}{% endblock %}
@@ -19,7 +19,7 @@
 
     <header class="site-header">
         <a href="/" class="site-logo" aria-label="个人图书馆首页">
-            {% include 'library/includes/logo.svg' %}
+            <img src="{% static 'img/logo.png' %}" alt="个人图书馆" style="height:36px;width:auto">
         </a>
         <nav class="site-nav" aria-label="主导航">
             <a href="/?mode=graph" class="nav-link active" data-mode="graph">白板</a>

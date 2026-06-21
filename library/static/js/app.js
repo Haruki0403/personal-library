@@ -205,7 +205,7 @@
 
     function getCyStyle() {
         return [
-            { selector: 'node', style: { 'background-color': 'data(color)', 'label': 'data(label)', 'color': '#2C2416', 'font-size': '12px', 'font-family': 'Noto Serif SC, serif', 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 6, 'width': 44, 'height': 44, 'border-width': 2, 'border-color': 'data(color)', 'border-opacity': 0.4, 'shape': 'round-rectangle' } },
+            { selector: 'node', style: { 'background-color': 'data(color)', 'label': 'data(label)', 'color': '#2C2416', 'font-size': '12px', 'font-family': 'STFangsong, FangSong, serif', 'text-valign': 'bottom', 'text-halign': 'center', 'text-margin-y': 6, 'width': 44, 'height': 44, 'border-width': 2, 'border-color': 'data(color)', 'border-opacity': 0.4, 'shape': 'round-rectangle' } },
             { selector: 'edge', style: { 'width': 2, 'line-color': '#B5A894', 'curve-style': 'unbundled-bezier', 'target-arrow-shape': 'triangle', 'target-arrow-color': '#B5A894', 'arrow-scale': 0.6 } },
             { selector: 'edge[confirmed="false"]', style: { 'line-style': 'dashed', 'line-color': '#CCBBAA' } },
             { selector: 'node:selected', style: { 'border-width': 3, 'border-color': '#D4844A', 'border-opacity': 1 } }

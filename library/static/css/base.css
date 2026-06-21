@@ -57,9 +57,9 @@
     --content-full: 100%;
 
     /* Fonts */
-    --font-display: 'ZCOOL KuaiLe', 'LXGW WenKai', cursive;
-    --font-body: 'Noto Serif SC', 'Source Serif 4', Georgia, serif;
-    --font-mono: 'LXGW WenKai Mono', monospace;
+    --font-display: 'ZCOOL KuaiLe', cursive;
+    --font-body: 'STFangsong', 'FangSong', '华文仿宋', 'FangSong_GB2312', serif;
+    --font-mono: 'STFangsong', 'FangSong', monospace;
 }
 
 /* ========================================
@@ -214,7 +214,7 @@ a, button, [role="button"], [role="link"], input, textarea, select {
 
 .site-nav {
     display: flex;
-    gap: var(--space-1);
+    gap: var(--space-4);
     flex: 1;
 }
 
@@ -514,7 +514,7 @@ a, button, [role="button"], [role="link"], input, textarea, select {
 
 .modal-actions {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-6);
     justify-content: flex-end;
     margin-top: var(--space-6);
 }
