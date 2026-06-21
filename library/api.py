@@ -98,6 +98,7 @@ def cards_handler(request):
     /api/cards/ — dispatches on HTTP method.
     GET → list all cards + connections (public)
     POST → create new card (login required)
+    PUT → update existing card (login required)
     """
     if request.method == 'GET':
         return list_cards(request)
@@ -105,6 +106,10 @@ def cards_handler(request):
         if not request.user.is_authenticated:
             return JsonResponse({'error': '请先登录'}, status=401)
         return create_card(request)
+    elif request.method == 'PUT':
+        if not request.user.is_authenticated:
+            return JsonResponse({'error': '请先登录'}, status=401)
+        return update_card(request)
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
@@ -192,6 +197,45 @@ def create_card(request):
         'card': _card_to_dict(card),
         'suggested_connections': suggestions,
     })
+
+
+def update_card(request):
+    """
+    PUT /api/cards/ — update an existing card.
+    Body: JSON with card_id, type, and fields to update.
+    """
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': '无效的 JSON'}, status=400)
+
+    card_id = data.get('card_id')  # e.g. "bookcard-3"
+    card = _resolve_card(card_id)
+    if not card:
+        return JsonResponse({'error': '卡片不存在'}, status=404)
+
+    card_type = data.get('type', card.card_type.replace('card', ''))
+    fields = SHARED_FIELDS.get(card_type, [])
+
+    for field in fields:
+        if field == 'title':
+            continue
+        if field in data:
+            setattr(card, field, data[field])
+
+    # Update title
+    if 'title' in data:
+        card.title = data['title']
+
+    # Update tags
+    if 'tags' in data:
+        card.tags.clear()
+        for tname in data['tags']:
+            tag, _ = Tag.objects.get_or_create(name=tname)
+            card.tags.add(tag)
+
+    card.save()
+    return JsonResponse({'card': _card_to_dict(card)})
 
 
 @csrf_exempt

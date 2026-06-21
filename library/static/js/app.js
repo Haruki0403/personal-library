@@ -278,6 +278,14 @@
     function removeTooltip() { if (tooltipEl) { tooltipEl.remove(); tooltipEl = null; } }
 
     /* ========================================
+       Auth check
+       ======================================== */
+    function isAuthenticated() {
+        const meta = document.querySelector('meta[name="is-authenticated"]');
+        return meta && meta.content === 'true';
+    }
+
+    /* ========================================
        Card detail rendering
        ======================================== */
     function showCardDetail(card) {
@@ -295,8 +303,12 @@
 
         const notes = card.notes || card.body || '';
         const rendered = typeof marked !== 'undefined' ? marked.parse(notes) : notes.replace(/\n/g, '<br>');
+        const editBtn = isAuthenticated()
+            ? `<button class="btn btn-secondary" onclick="window._editCardById('${card.id}')" style="font-size:13px;padding:2px var(--space-3);position:absolute;top:var(--space-3);right:var(--space-12)">✏️ 编辑</button>`
+            : '';
 
         detailContent.innerHTML = `
+            ${editBtn}
             <div style="border-left:4px solid ${color};padding-left:var(--space-4);margin-bottom:var(--space-6)">
                 <span style="color:${color};font-family:var(--font-display);font-size:13px">${labels[card.type]||''}</span>
                 <h2 style="font-family:var(--font-display);margin:var(--space-2) 0">${card.title}</h2>
@@ -308,6 +320,69 @@
         `;
         openDetail(detailContent.innerHTML);
     }
+
+    /* ========================================
+       Inline editing
+       ======================================== */
+    window._editCardById = function(cardId) {
+        const card = allCards.find(c => c.id === cardId);
+        if (!card) return;
+        const color = getCardColor(card.type);
+        const notes = card.notes || card.body || '';
+        const tagsStr = (card.tags || []).join(', ');
+
+        detailContent.innerHTML = `
+            <h2 style="font-family:var(--font-display);margin-bottom:var(--space-4);border-left:4px solid ${color};padding-left:var(--space-4)">编辑卡片</h2>
+            <div class="form-group">
+                <label>标题</label>
+                <input type="text" id="editTitle" value="${card.title}">
+            </div>
+            <div class="form-group">
+                <label>内容 (Markdown)</label>
+                <textarea id="editNotes" rows="8">${notes}</textarea>
+            </div>
+            <div class="form-group">
+                <label>标签（逗号分隔）</label>
+                <input type="text" id="editTags" value="${tagsStr}">
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelEdit">取消</button>
+                <button class="btn btn-primary" id="saveEdit">保存</button>
+            </div>
+        `;
+
+        $('#cancelEdit').addEventListener('click', () => showCardDetail(card));
+        $('#saveEdit').addEventListener('click', () => {
+            const newTags = $('#editTags').value.split(/[,，]/).map(t => t.trim()).filter(Boolean);
+            fetch('/api/cards/', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    card_id: card.id,
+                    type: card.type,
+                    title: $('#editTitle').value,
+                    notes: $('#editNotes').value,
+                    tags: newTags
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                // Update local cache
+                const idx = allCards.findIndex(c => c.id === cardId);
+                if (idx >= 0) allCards[idx] = data.card;
+                // Update graph node label
+                if (cy) {
+                    const node = cy.getElementById(cardId);
+                    if (node.length) {
+                        node.data('label', data.card.title);
+                        node.data('details', data.card);
+                    }
+                }
+                showCardDetail(data.card);
+            })
+            .catch(err => { console.error(err); alert('保存失败'); });
+        });
+    };
 
     /* ========================================
        Card wall (list mode)

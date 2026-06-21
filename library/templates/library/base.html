@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="is-authenticated" content="{{ user.is_authenticated|yesno:'true,false' }}">
     <title>{% block title %}个人图书馆{% endblock %}</title>
 
     <!-- Font: ZCOOL KuaiLe (display, cheese font) -->
